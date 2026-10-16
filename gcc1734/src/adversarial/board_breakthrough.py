@@ -46,6 +46,16 @@ class BreakThrough(BoardGame):
         return moves
 
 
+    def make_move(self, move):
+
+        ((r_org, c_org), (r_dest, c_dest)) = move
+
+        self.board[r_dest][c_dest] = self.board[r_org][c_org]
+        self.board[r_org][c_org] = ' '
+
+        self.current = 'O' if self.current == 'X' else 'X'
+
+
     def print_board(self):
         # Print column numbers at the top
         print('   ' + ' '.join(map(str, range(self.cols))))
@@ -61,13 +71,8 @@ class BreakThrough(BoardGame):
 if __name__ == "__main__":
 
     game = BreakThrough()
-
+    
+    print("=== Initial Board ===")
     game.print_board()
+    print(f"Current player: {game.current}")
 
-
-    moves = game.available_moves()
-
-    for move in moves:
-        print(move)
-
-    print(len(moves))
