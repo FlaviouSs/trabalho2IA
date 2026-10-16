@@ -1,0 +1,2 @@
+python ./play_connect_four_minimax_with_hef.py
+python ./play_connect_four_mcts.py
