@@ -6,7 +6,7 @@ class BreakThrough(BoardGame):
         
         self.board = [
             ['O'] * self.cols if i < 2
-            else ['X'] * self.cols if i >= self.rows - 2
+            else [self.current] * self.cols if i >= self.rows - 2
             else [' '] * self.cols
             for i in range(self.rows)
         ]
