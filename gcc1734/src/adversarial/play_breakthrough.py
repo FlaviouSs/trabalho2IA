@@ -1,5 +1,7 @@
+import argparse
 from board_breakthrough import BreakThrough
 from minimax import minimax_with_hef
+from mcts import mcts
 
 def parse_coordinate(coord_str):
     """Converts notation like 'g0' to board indices (6, 0)."""
@@ -15,6 +17,7 @@ def parse_coordinate(coord_str):
         return (row, col)
 
     return None
+
 
 def parse_move(input_str):
     """Parses user input into a move tuple ((r_org, c_org), (r_dest, c_dest))."""
@@ -38,6 +41,7 @@ def parse_move(input_str):
 
     return None
 
+
 def format_move(move):
     """Formats a move tuple ((6, 0), (5, 0)) into readable chess notation 'g0 -> f0'."""
     (r_org, c_org), (r_dest, c_dest) = move
@@ -47,7 +51,9 @@ def format_move(move):
         f"{chr(ord('a') + r_dest)}{c_dest}"
     )
 
+
 def evaluate_breakthrough(board, player):
+    
     rows = len(board)
     cols = len(board[0])
 
@@ -118,8 +124,8 @@ def best_move_minimax(game, depth=3):
     return best_action
 
 
+def mcts_agent(iterations=200):
 
-def minimax_agent():
     game = BreakThrough()
 
     while game.winner() is None:
@@ -145,7 +151,7 @@ def minimax_agent():
 
         else:
             print("\n[O] Thinking...")
-            ai_move = best_move_minimax(game, depth=3)
+            ai_move = mcts(game, iterations=iterations)
             if ai_move:
                 game.make_move(ai_move)
                 print(f"[O] Played: {format_move(ai_move)}\n")
@@ -155,9 +161,71 @@ def minimax_agent():
         game.print_board()
         print(f"\nGame Over. Winner: [{winner}]")
 
-def main():
-    minimax_agent()
+
+def minimax_agent(depth=3):
+
+    game = BreakThrough()
+
+    while game.winner() is None:
+        game.print_board()
+
+        if game.current == 'X':
+            user_input = input("\n[X] Move: ").strip()
+
+            if user_input.lower() in ['quit', 'exit']:
+                break
+
+            if user_input.lower() in ['moves', 'help']:
+                valid_moves = [format_move(m) for m in game.available_moves()]
+                for i in range(0, len(valid_moves), 4):
+                    print("  " + "   ".join(valid_moves[i:i + 4]))
+                continue
+
+            move = parse_move(user_input)
+            if move and move in game.available_moves():
+                game.make_move(move)
+            else:
+                print("Invalid move.\n")
+
+        else:
+            print("\n[O] Thinking...")
+            ai_move = best_move_minimax(game, depth=depth)
+            if ai_move:
+                game.make_move(ai_move)
+                print(f"[O] Played: {format_move(ai_move)}\n")
+
+    winner = game.winner()
+    if winner:
+        game.print_board()
+        print(f"\nGame Over. Winner: [{winner}]")
+
+def main(args):
+    if args.algo == "minimax":
+        minimax_agent(depth=args.depth)
+    elif args.algo == "mcts":
+        mcts_agent(iterations=args.iterations)
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Play Breakthrough against an AI agent.")
+    parser.add_argument(
+        "--algo",
+        type=str,
+        choices=["minimax", "mcts"],
+        default="minimax",
+        help="Algorithm for the AI agent ('minimax' or 'mcts'). Default: minimax",
+    )
+    parser.add_argument(
+        "--depth",
+        type=int,
+        default=3,
+        help="Search depth for Minimax. Default: 3",
+    )
+    parser.add_argument(
+        "--iterations",
+        type=int,
+        default=200,
+        help="Number of simulations for MCTS. Default: 200",
+    )
+    args = parser.parse_args()
 
-    main()
+    main(args)
