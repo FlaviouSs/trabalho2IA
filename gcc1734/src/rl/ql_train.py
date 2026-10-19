@@ -20,6 +20,7 @@ from rl.environment_blackjack import BlackjackEnvironment
 from rl.environment_taxi import TaxiEnvironment
 from rl.environment_cliffwalking import CliffWalkingEnvironment
 from rl.environment_frozenlake import FrozenLakeEnvironment
+from rl.environment_mountaincar import MountainCarEnvironment
 from rl.qll import QLearningAgentLinear
 from rl.qlt import QLearningAgentTabular
 
@@ -34,6 +35,7 @@ environment_dict: Dict[str, EnvironmentFactory] = {
     "Taxi-v3": TaxiEnvironment,
     "CliffWalking-v1": CliffWalkingEnvironment,
     "FrozenLake-v1": FrozenLakeEnvironment,
+    "MountainCar-v0": MountainCarEnvironment,
 }
 
 

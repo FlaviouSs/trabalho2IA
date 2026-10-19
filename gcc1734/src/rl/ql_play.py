@@ -15,6 +15,7 @@ from rl.environment_blackjack import BlackjackEnvironment
 from rl.environment_taxi import TaxiEnvironment
 from rl.environment_cliffwalking import CliffWalkingEnvironment
 from rl.environment_frozenlake import FrozenLakeEnvironment
+from rl.environment_mountaincar import MountainCarEnvironment
 from rl.qlt import QLearningAgentTabular
 from rl.qll import QLearningAgentLinear
 
@@ -28,6 +29,7 @@ ENVIRONMENT_WRAPPERS: Dict[str, EnvironmentWrapper] = {
     "Blackjack-v1": BlackjackEnvironment,
     "CliffWalking-v1": CliffWalkingEnvironment,
     "FrozenLake-v1": FrozenLakeEnvironment,
+    "MountainCar-v0": MountainCarEnvironment,
 }
 
 
