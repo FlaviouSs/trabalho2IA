@@ -18,6 +18,8 @@ if __package__ is None or __package__ == "":
 
 from rl.environment_blackjack import BlackjackEnvironment
 from rl.environment_taxi import TaxiEnvironment
+from rl.environment_cliffwalking import CliffWalkingEnvironment
+from rl.environment_frozenlake import FrozenLakeEnvironment
 from rl.qll import QLearningAgentLinear
 from rl.qlt import QLearningAgentTabular
 
@@ -30,6 +32,8 @@ TrainFn = Callable[[object, argparse.Namespace], Dict[str, Iterable[float]]]
 environment_dict: Dict[str, EnvironmentFactory] = {
     "Blackjack-v1": BlackjackEnvironment,
     "Taxi-v3": TaxiEnvironment,
+    "CliffWalking-v1": CliffWalkingEnvironment,
+    "FrozenLake-v1": FrozenLakeEnvironment,
 }
 
 

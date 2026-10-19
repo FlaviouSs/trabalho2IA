@@ -13,6 +13,8 @@ import gymnasium as gym
 
 from rl.environment_blackjack import BlackjackEnvironment
 from rl.environment_taxi import TaxiEnvironment
+from rl.environment_cliffwalking import CliffWalkingEnvironment
+from rl.environment_frozenlake import FrozenLakeEnvironment
 from rl.qlt import QLearningAgentTabular
 from rl.qll import QLearningAgentLinear
 
@@ -24,6 +26,8 @@ ActionSelector = Callable[[object, object, object], int]
 ENVIRONMENT_WRAPPERS: Dict[str, EnvironmentWrapper] = {
     "Taxi-v3": TaxiEnvironment,
     "Blackjack-v1": BlackjackEnvironment,
+    "CliffWalking-v1": CliffWalkingEnvironment,
+    "FrozenLake-v1": FrozenLakeEnvironment,
 }
 
 
