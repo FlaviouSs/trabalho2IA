@@ -90,21 +90,21 @@ class CliffWalkingFeatureExtractor(FeatureExtractor):
         row, col = divmod(state, 12)
 
         if action == Actions.RIGHT:
-            return float(row == 3 and col == 0)
+            return 1.0 if (row == 3 and col == 0) else 0.0
 
         if action == Actions.DOWN:
-            return float(row == 2 and 1 <= col <= 10)
+            return 1.0 if (row == 2 and 1 <= col <= 10) else 0.0
 
         return 0.0
 
     def f_wall_bump(self, state, action):
         row, col = divmod(state, 12)
         nr, nc = self.__future_position(state, action)
-        return float(nr == row and nc == col)
+        return 1.0 if (nr == row and nc == col) else 0.0
 
     def f_goal_drop(self, state, action):
         row, col = divmod(state, 12)
-        return float(col == 11 and row < 3 and action == Actions.DOWN)
+        return 1.0 if (col == 11 and row < 3 and action == Actions.DOWN) else 0.0
 
 
     
